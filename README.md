@@ -50,6 +50,37 @@ python scripts/play.py --process '<game_executable_name>.exe'
 
 The `--process` parameter must be the exact executable name of the game you want to play. You can find it by right-clicking on the game process in Windows Task Manager (Ctrl+Shift+Esc), and selecting `Properties`. The process name should be in the `General` tab and end with `.exe`.
 
+# LoRA Fine-tuning
+
+Fine-tune NitroGen with Low-Rank Adapters (LoRA) on your own game data:
+
+```bash
+python scripts/train.py --config configs/train_synth.yaml
+```
+
+## Configuration
+
+Edit `configs/train_synth.yaml` to set:
+- `checkpoint`: Path to base NitroGen model (`ng.pt`)
+- `data_dir`: Path to training data directory
+- `lora`: LoRA rank, alpha, and target modules
+- `train`: Learning rate, batch size, steps, etc.
+
+## Dataset Format
+
+Organize your data with this structure:
+```
+data_dir/
+├── chunk_0/
+│   ├── metadata.json
+│   ├── video.mp4 (or .mkv, .avi, .webm)
+│   └── actions.npz (buttons, j_left, j_right)
+├── chunk_1/
+└── ...
+```
+
+Use `scripts/gen_synth_data.py` to generate synthetic test data or `scripts/convert_actions.py` to convert parquet to NPZ format.
+
 <!-- TODO # Paper and Citation
 
 If you find our work useful, please consider citing us!

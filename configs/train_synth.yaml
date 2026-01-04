@@ -1,0 +1,108 @@
+train:
+  experiment_name: synth_lora_smoke
+  seed: 0
+  device: cuda
+  precision: bf16
+  batch_size: 1
+  steps: 50
+  grad_accum_steps: 1
+  lr: 1.0e-4
+  weight_decay: 0.0
+  grad_clip_norm: 1.0
+  log_every: 5
+  save_every: 50
+  out_dir: outputs/synth
+  num_workers: 0
+  # New parameters moved from CLI
+  checkpoint: "G:/storage/ng.pt" # Path to base model checkpoint (e.g. G:/storage/ng.pt)
+  data_dir: "data/test_synth_large" # Path to training data directory
+  save_lora_only: "outputs/lora_test.pt" # Path to save LoRA-only weights (e.g. outputs/lora.pt)
+  no_save: true # If true, skip saving full checkpoints
+  synthetic:
+    num_samples: 128
+    num_frames: 1
+    image_size: 224
+    buttons_dim: 21
+
+model:
+  model_type: nitrogen
+  add_pos_embed: false
+  model_dtype: float32
+  hidden_size: 768
+  max_seq_len: 300
+  action_dim: 25
+  action_horizon: 16
+  noise_beta_alpha: 1.5
+  noise_beta_beta: 1.0
+  noise_s: 0.999
+  num_timestep_buckets: 1000
+  num_inference_timesteps: 16
+  max_num_embodiments: 1
+  vision_encoder_name: google/siglip-base-patch16-224
+  vision_hidden_size: 768
+  add_view_embed: false
+  tune_vision_tower: false
+  tune_mm_projector: false
+  tune_diffusion_model: true
+  tune_multi_projector: false
+  tune_vl_mixing: true
+  diffusion_model_cfg:
+    num_attention_heads: 12
+    attention_head_dim: 64
+    output_dim: 768
+    num_layers: 4
+    dropout: 0.0
+    attention_bias: true
+    activation_fn: gelu-approximate
+    num_embeds_ada_norm: 1000
+    upcast_attention: false
+    norm_type: ada_norm
+    norm_elementwise_affine: false
+    norm_eps: 1.0e-5
+    max_num_positional_embeddings: 512
+    compute_dtype: float32
+    final_dropout: false
+    positional_embeddings: sinusoidal
+    interleave_self_attention: false
+    cross_attention_dim: 768
+  vl_self_attention_cfg:
+    num_attention_heads: 12
+    attention_head_dim: 64
+    output_dim: 768
+    num_layers: 2
+    dropout: 0.0
+    attention_bias: true
+    activation_fn: gelu-approximate
+    num_embeds_ada_norm: 1000
+    upcast_attention: false
+    max_num_positional_embeddings: 512
+    compute_dtype: float32
+    final_dropout: false
+    positional_embeddings: sinusoidal
+    interleave_self_attention: false
+
+tokenizer:
+  tokenizer_id: nitrogen
+  training: true
+  num_visual_tokens_per_frame: 196
+  max_action_dim: 25
+  max_sequence_length: 300
+  action_horizon: 16
+  game_mapping_cfg: null
+  old_layout: false
+
+modality:
+  frame_per_sample: 1
+  frame_spacing: null
+  action_per_chunk: 8
+  action_shift: 1
+  action_interleaving: false
+  token_set: new
+
+lora:
+  rank: 128
+  alpha: 256
+  dropout: 0.05
+  target_modules:
+    - model
+    - vl_self_attention_model
