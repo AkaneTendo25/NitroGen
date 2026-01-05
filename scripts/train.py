@@ -30,7 +30,7 @@ from nitrogen.lora import LoRALinear, mark_only_lora_as_trainable
 from transformers import AutoImageProcessor
 
 
-class RealNitroGenDataset(Dataset):
+class NitroGenDataset(Dataset):
     def __init__(
         self,
         data_dir: str,
@@ -539,7 +539,7 @@ def main() -> None:
 
     dataset_cfg = train_cfg["synthetic"]
     print(f"Loading dataset from {data_dir}")
-    dataset = RealNitroGenDataset(
+    dataset = NitroGenDataset(
         data_dir=data_dir,
         num_frames=dataset_cfg["num_frames"],
         image_size=dataset_cfg["image_size"],

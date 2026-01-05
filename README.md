@@ -81,17 +81,17 @@ data_dir/
 
 Use `scripts/gen_synth_data.py` to generate synthetic test data or `scripts/convert_actions.py` to convert parquet to NPZ format.
 
-<!-- TODO # Paper and Citation
+# Paper and Citation
 
 If you find our work useful, please consider citing us!
 
 ```bibtex
-@article{,
-  title   = {},
-  author  = {},
-  year    = {},
-  journal = {}
+@misc{Magne2025NitroGen,
+  title        = {NitroGen: An Open Foundation Model for Generalist Gaming Agents},
+  author       = {Magne, Lo{\"\i}c and Awadalla, Anas and Wang, Guanzhi and Xu, Yinzhen and Belofsky, Joshua and Hu, Fengyuan and Kim, Joohwan and Schmidt, Ludwig and Gkioxari, Georgia and Kautz, Jan and Yue, Yisong and Choi, Yejin and Zhu, Yuke and Fan, Linxi},
+  year         = {2025},
+  howpublished = {\url{https://nitrogen.minedojo.org/}},
 }
-``` -->
+```
 
 **Disclaimer**: This project is strictly for research purposes and is not an official NVIDIA product.
